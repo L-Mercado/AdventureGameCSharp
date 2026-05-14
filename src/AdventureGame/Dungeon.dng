@@ -1,0 +1,59 @@
+# Adventure Game Dungeon File 
+# A straightforward 5x5 dungeon layout
+# Format: DIMENSIONS rows cols
+
+DIMENSIONS 5 5
+
+# Dungeon exit (top-right corner)
+EXIT 0 4
+
+# Adventurer start position (bottom-left corner)
+START 4 0
+
+# Lamp position (one room away from start)
+LAMP 3 1
+
+# Key position (near the chest)
+KEY 1 3
+
+# Chest position (center of dungeon)
+CHEST 2 2
+
+# Grue start position (bottom-right corner, far from start)
+GRUE 4 4
+
+# Rooms: row col lit description north south east west
+# Row 0 (Top row)
+ROOM 0 0 1 "Entrance Hall - A grand entrance with torchlight" 0 1 1 0
+ROOM 0 1 1 "Bright Corridor - Well-lit passage" 0 1 1 1
+ROOM 0 2 1 "Upper Hall - Light filters through cracks" 0 1 1 1
+ROOM 0 3 1 "Eastern Gallery - Sunlight streams in" 0 1 1 1
+ROOM 0 4 1 "EXIT - THE WAY OUT! (Need chest key to escape)" 0 0 0 1
+
+# Row 1
+ROOM 1 0 1 "Guard Room - Empty and quiet" 1 1 1 0
+ROOM 1 1 1 "Crossroads - Multiple paths meet here" 1 1 1 1
+ROOM 1 2 0 "Dark Passage - Shadows dance on walls" 1 1 1 1
+ROOM 1 3 1 "Key Chamber - A glint catches your eye" 1 1 1 1
+ROOM 1 4 0 "Dead End Corridor - Nothing here" 1 0 0 1
+
+# Row 2 (Middle row - contains chest)
+ROOM 2 0 1 "Lower Hall - Cracked stone floor" 1 1 1 0
+ROOM 2 1 1 "Junction Point - You hear dripping water" 1 1 1 1
+ROOM 2 2 1 "TREASURE CHAMBER - A ornate chest sits here" 1 1 1 1
+ROOM 2 3 0 "Shadowy Alcove - Dust fills the air" 1 1 1 1
+ROOM 2 4 0 "Empty Room - Barren and cold" 1 0 0 1
+
+# Row 3
+ROOM 3 0 1 "Lower Passage - Faint light ahead" 1 1 1 0
+ROOM 3 1 1 "Lamp Room - A lamp rests on a pedestal" 1 1 1 1
+ROOM 3 2 0 "Gloomy Tunnel - Hard to see" 1 1 1 1
+ROOM 3 3 0 "Dark Corridor - Eerie silence" 1 1 1 1
+ROOM 3 4 0 "Storage Room - Old crates and barrels" 1 0 0 1
+
+# Row 4 (Bottom row - contains start)
+ROOM 4 0 1 "STARTING POINT - You wake up here" 1 0 1 0
+ROOM 4 1 1 "Bottom Passage - Rocky floor" 1 0 1 1
+ROOM 4 2 0 "Deep Tunnel - Darkness surrounds you" 1 0 1 1
+ROOM 4 3 0 "Lower Depths - Extremely dark" 1 0 1 1
+ROOM 4 4 1 "Grue's Lair - You sense danger here" 1 0 0 1
