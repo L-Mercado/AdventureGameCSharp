@@ -2,37 +2,32 @@ namespace AdventureGame;
 
 public class Adventurer
 {
-	private bool hasLamp;
-	private bool hasKey;
+    private bool hasLamp;
+    private bool hasKey;
 
-	public Adventurer()
-	{
-		SetLamp(false);
-		SetKey(false);
-	}
+    public Adventurer()
+    {
+        hasLamp = false;
+        hasKey = false;
+    }
 
-	public bool HasLamp()
-	{
-		return hasLamp;
-	}
+    public bool HasLamp()
+    {
+        return hasLamp;
+    }
 
-	public bool HasKey()
-	{
-		return hasKey;
-	}
+    public bool HasKey()
+    {
+        return hasKey;
+    }
 
-	public void SetLamp(bool b)
-	{
-		hasLamp = b;
-	}
+    public void SetLamp(bool b)
+    {
+        hasLamp = b;
+    }
 
-	public void SetKey(bool b)
-	{
-		hasKey = b;
-	}
-
-	public override string ToString()
-	{
-		return $"Adventurer[hasLamp={hasLamp}, hasKey={hasKey}]";
-	}
+    public void SetKey(bool b)
+    {
+        hasKey = b;
+    }
 }
