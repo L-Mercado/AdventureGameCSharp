@@ -24,7 +24,7 @@ public class AdventureGame
     private bool isAdventureAlive;
     private string lastDirection;
     
-    // New fields for enhanced mechanics
+    
     private int exitRow;
     private int exitCol;
     private int grueRow;
@@ -49,7 +49,7 @@ public class AdventureGame
         {
             ShowScene();
             
-            // Check if grue catches player at the start of each turn
+            
             if (isGruePursuing && grueRow == aRow && grueCol == aCol)
             {
                 Console.WriteLine("\nThe Grue catches you in the darkness! You are devoured!");
@@ -69,7 +69,7 @@ public class AdventureGame
 
             UpdateGameState();
             
-            // Check if player reached exit
+            
             if (!hasExited && aRow == exitRow && aCol == exitCol && isChestOpen)
             {
                 Console.WriteLine("\n*** You have found the dungeon exit and escaped! ***");
@@ -89,7 +89,7 @@ public class AdventureGame
         int cols = 8;
         dungeon = new Room[rows, cols];
         
-        // Set default positions
+        
         exitRow = 0;
         exitCol = 7;
         aRow = 1;
@@ -97,16 +97,16 @@ public class AdventureGame
         grueRow = 7;
         grueCol = 7;
         
-        // Create all rooms with connections
+        
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < cols; j++)
             {
                 dungeon[i, j] = new Room();
                 dungeon[i, j].SetDescription($"Room ({i},{j})");
-                dungeon[i, j].SetLit(i == 0 || i == 1 || j == 0); // Some rooms are lit
+                dungeon[i, j].SetLit(i == 0 || i == 1 || j == 0); 
                 
-                // Add exits with bounds checking
+                
                 dungeon[i, j].SetNorth(i > 0);
                 dungeon[i, j].SetSouth(i < rows - 1);
                 dungeon[i, j].SetEast(j < cols - 1);
@@ -114,12 +114,12 @@ public class AdventureGame
             }
         }
         
-        // Place items
-        dungeon[0, 1].SetLamp(true);  // Lamp
-        dungeon[2, 5].SetKey(true);   // Key
-        dungeon[5, 5].SetChest(true); // Chest
         
-        // Special descriptions
+        dungeon[0, 1].SetLamp(true);  
+        dungeon[2, 5].SetKey(true);   
+        dungeon[5, 5].SetChest(true); 
+        
+        
         dungeon[0, 0].SetDescription("Entrance Hall - A grand entrance");
         dungeon[1, 0].SetDescription("Starting Room - Where you begin your journey");
         dungeon[0, 7].SetDescription("Exit Chamber - The way out!");
@@ -139,7 +139,7 @@ public class AdventureGame
 
     private void LoadDungeonFromFile(string filename)
     {
-        // If file doesn't exist, create a default dungeon
+        
         if (!File.Exists(filename))
         {
             Console.WriteLine($"Warning: '{filename}' not found. Creating default dungeon...");
@@ -150,7 +150,7 @@ public class AdventureGame
         string[] lines = File.ReadAllLines(filename);
         int rows = 0, cols = 0;
         
-        // Initialize default values
+        
         exitRow = -1;
         exitCol = -1;
         aRow = -1;
@@ -161,14 +161,14 @@ public class AdventureGame
         grueRow = -1;
         grueCol = -1;
         
-        // Temporary room storage
+        
         var tempRooms = new Dictionary<string, (bool lit, string desc, bool n, bool s, bool e, bool w)>();
 
         foreach (string line in lines)
         {
             string trimmedLine = line.Trim();
             
-            // Skip comments and empty lines
+            
             if (trimmedLine.StartsWith("#") || string.IsNullOrWhiteSpace(trimmedLine))
                 continue;
 
@@ -182,10 +182,10 @@ public class AdventureGame
                     rows = int.Parse(parts[1]);
                     cols = int.Parse(parts[2]);
                     
-                    // Add bounds checking
+                    
                     if (rows <= 0 || cols <= 0)
                         throw new InvalidDataException($"Invalid dimensions: {rows}x{cols}");
-                    if (rows > 100 || cols > 100)  // Sanity check
+                    if (rows > 100 || cols > 100)  
                         throw new InvalidDataException($"Dimensions too large: {rows}x{cols}");
                     
                     dungeon = new Room[rows, cols];
@@ -236,7 +236,7 @@ public class AdventureGame
             }
         }
 
-        // Validate required coordinates
+        
         if (rows == 0 || cols == 0) throw new InvalidDataException("DIMENSIONS not specified");
         if (exitRow == -1) throw new InvalidDataException("EXIT not specified");
         if (aRow == -1) throw new InvalidDataException("START not specified");
@@ -245,7 +245,7 @@ public class AdventureGame
         if (chestRow == -1) throw new InvalidDataException("CHEST not specified");
         if (grueRow == -1) throw new InvalidDataException("GRUE not specified");
 
-        // Validate all coordinates are within bounds
+        
         ValidateCoordinates(rows, cols, exitRow, exitCol, "EXIT");
         ValidateCoordinates(rows, cols, aRow, aCol, "START");
         ValidateCoordinates(rows, cols, lampRow, lampCol, "LAMP");
@@ -253,7 +253,7 @@ public class AdventureGame
         ValidateCoordinates(rows, cols, chestRow, chestCol, "CHEST");
         ValidateCoordinates(rows, cols, grueRow, grueCol, "GRUE");
 
-        // Initialize all rooms
+        
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < cols; j++)
@@ -271,13 +271,13 @@ public class AdventureGame
                 }
                 else
                 {
-                    // Default room if not specified
+                    
                     dungeon[i, j].SetDescription($"Room ({i},{j})");
                 }
             }
         }
 
-        // Place items
+        
         dungeon[lampRow, lampCol].SetLamp(true);
         dungeon[keyRow, keyCol].SetKey(true);
         dungeon[chestRow, chestCol].SetChest(true);
@@ -289,10 +289,10 @@ public class AdventureGame
     {
         adventurer = new Adventurer();
         
-        // Load dungeon from file
+        
         try
         {
-            // Try to find the file in multiple locations
+            
             string[] pathsToTry = {
                 "dungeon.dng",
                 Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "dungeon.dng"),
@@ -313,7 +313,7 @@ public class AdventureGame
             if (foundPath != null)
                 LoadDungeonFromFile(foundPath);
             else
-                LoadDungeonFromFile("dungeon.dng"); // This will trigger default dungeon creation
+                LoadDungeonFromFile("dungeon.dng"); 
         }
         catch (Exception ex)
         {
@@ -345,12 +345,12 @@ public class AdventureGame
     {
         if (!isGruePursuing) return;
         
-        // Simple pathfinding - move towards player using Manhattan distance priority
+        
         int bestRow = grueRow;
         int bestCol = grueCol;
         int bestDist = Math.Abs(grueRow - aRow) + Math.Abs(grueCol - aCol);
         
-        // Check all four directions
+        
         int[,] directions = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
         
         for (int i = 0; i < 4; i++)
@@ -379,7 +379,7 @@ public class AdventureGame
 
     private void ShowScene()
     {
-        // Add bounds checking
+        
         if (aRow < 0 || aRow >= dungeon.GetLength(0) || aCol < 0 || aCol >= dungeon.GetLength(1))
         {
             Console.WriteLine($"\nERROR: Invalid position ({aRow}, {aCol})! Resetting to start...");
@@ -396,7 +396,7 @@ public class AdventureGame
         {
             Console.WriteLine(r.GetDescription());
             
-            // Show exits
+            
             string exits = "";
             if (r.HasNorth()) exits += "North ";
             if (r.HasSouth()) exits += "South ";
@@ -410,7 +410,7 @@ public class AdventureGame
             Console.WriteLine("This room is pitch black!");
         }
         
-        // Show if items are present (only if room is lit or player has lamp)
+        
         if (adventurer.HasLamp() || r.IsLit())
         {
             if (r.HasLamp() && !adventurer.HasLamp())
@@ -506,7 +506,7 @@ public class AdventureGame
 
     private void UpdateGameState()
     {
-        // Additional state updates can go here
+        
     }
 
     private bool IsGameOver()
@@ -539,7 +539,7 @@ public class AdventureGame
         }
         Console.WriteLine("========================================");
         
-        // Pause before exiting
+        
         Console.WriteLine("\nPress Enter to exit...");
         Console.ReadLine();
     }
