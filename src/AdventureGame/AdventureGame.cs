@@ -498,7 +498,7 @@ public class AdventureGame
         {
             OpenChest(r);
         }
-        else // if(input == QUIT)
+        else 
         {
             Quit();
         }
